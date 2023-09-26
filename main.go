@@ -3,10 +3,10 @@ package singoton
 import (
 	"unsafe"
 
-	objectmetadata "github.com/KafkaWannaFly/singoton/object_metadata"
+	metadata "github.com/KafkaWannaFly/singoton/metadata"
 )
 
-var dependencyContainer = make(map[objectmetadata.ObjectMetadata]*any)
+var dependencyContainer = make(map[metadata.Metadata]*any)
 
 type RegisterOptions[T any] struct {
 	InitialValue *T
@@ -15,28 +15,28 @@ type RegisterOptions[T any] struct {
 
 func Register[T any](options RegisterOptions[T]) {
 	if options.InitialValue != nil {
-		addToContainer(objectmetadata.New(*options.InitialValue), options.InitialValue)
+		addToContainer(metadata.New(*options.InitialValue), options.InitialValue)
 	} else if options.InitFunction != nil {
 		initValue := options.InitFunction()
-		addToContainer(objectmetadata.New(*initValue), initValue)
+		addToContainer(metadata.New(*initValue), initValue)
 	} else {
 		var obj T
-		addToContainer(objectmetadata.New(obj), &obj)
+		addToContainer(metadata.New(obj), &obj)
 	}
 }
 
 func Get[T any]() *T {
 	var obj T
-	key := objectmetadata.New[T](obj)
+	key := metadata.New[T](obj)
 	unsafePointer := unsafe.Pointer(dependencyContainer[key])
 	return (*T)(unsafePointer)
 }
 
-func addToContainer[T any](key objectmetadata.ObjectMetadata, value *T) {
+func addToContainer[T any](key metadata.Metadata, value *T) {
 	unsafePointer := unsafe.Pointer(value)
 	dependencyContainer[key] = (*any)(unsafePointer)
 }
 
-func GetContainer() map[objectmetadata.ObjectMetadata]*any {
+func GetContainer() map[metadata.Metadata]*any {
 	return dependencyContainer
 }

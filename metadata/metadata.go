@@ -1,18 +1,18 @@
-package objectmetadata
+package metadata
 
 import (
 	"reflect"
 )
 
-type ObjectMetadata struct {
+type Metadata struct {
 	Name    string
 	Package string
 }
 
-func New[T any](obj T) ObjectMetadata {
+func New[T any](obj T) Metadata {
 	t := reflect.TypeOf(obj)
 
-	return ObjectMetadata{
+	return Metadata{
 		Name:    t.Name(),
 		Package: t.PkgPath(),
 	}
