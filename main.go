@@ -13,6 +13,10 @@ type RegisterOptions[T any] struct {
 	InitFunction func() *T
 }
 
+type IFactory[T any] interface {
+	InitObject() T
+}
+
 func Register[T any](options RegisterOptions[T]) {
 	if options.InitialValue != nil {
 		addToContainer(metadata.New(*options.InitialValue), options.InitialValue)
@@ -25,6 +29,14 @@ func Register[T any](options RegisterOptions[T]) {
 	}
 }
 
+func RegisterFactory[T any](factory IFactory[T]) {
+	panic("Not implemented")
+}
+
+func UnRegister[T any]() *T {
+	panic("Not implemented")
+}
+
 func Get[T any]() *T {
 	var obj T
 	key := metadata.New[T](obj)
@@ -32,11 +44,11 @@ func Get[T any]() *T {
 	return (*T)(unsafePointer)
 }
 
+func GetContainer() map[metadata.Metadata]*any {
+	return dependencyContainer
+}
+
 func addToContainer[T any](key metadata.Metadata, value *T) {
 	unsafePointer := unsafe.Pointer(value)
 	dependencyContainer[key] = (*any)(unsafePointer)
-}
-
-func GetContainer() map[metadata.Metadata]*any {
-	return dependencyContainer
 }
