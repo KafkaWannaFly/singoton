@@ -25,7 +25,9 @@
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
 				"trunk.io",
-				"marclipovsky.string-manipulation"
+				"marclipovsky.string-manipulation",
+				"eamodio.gitlens",
+				"donjayamanne.githistory"
 			]
 		}
 	}
