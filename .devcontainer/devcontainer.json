@@ -24,7 +24,8 @@
 			"extensions": [
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
-				"trunk.io"
+				"trunk.io",
+				"marclipovsky.string-manipulation"
 			]
 		}
 	}

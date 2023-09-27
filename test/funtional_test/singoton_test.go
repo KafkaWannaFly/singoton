@@ -10,11 +10,18 @@ import (
 func TestRegisterAndGet(t *testing.T) {
 	singoton.Register(singoton.RegisterOptions[DummyStruct0]{
 		InitialValue: &DummyStruct0{
-			DummyInt: 111,
-			DummyStr: "222",
+			DummyInt: 000,
+			DummyStr: "000",
 		},
 	})
-	singoton.Register(singoton.RegisterOptions[DummyStruct1]{})
+	singoton.Register(singoton.RegisterOptions[DummyStruct1]{
+		InitFunction: func() *DummyStruct1 {
+			return &DummyStruct1{
+				DummyInt: 111,
+				DummyStr: "111",
+			}
+		},
+	})
 	singoton.Register(singoton.RegisterOptions[DummyStruct2]{})
 	singoton.Register(singoton.RegisterOptions[DummyStruct3]{})
 	singoton.Register(singoton.RegisterOptions[DummyStruct4]{})
@@ -25,7 +32,11 @@ func TestRegisterAndGet(t *testing.T) {
 	size := len(dependencyContainer)
 	assert.Equal(t, 7, size)
 
-	dummy := singoton.Get[DummyStruct0]()
-	assert.Equal(t, dummy.DummyInt, 111)
-	assert.Equal(t, dummy.DummyStr, "222")
+	dummy0 := singoton.Get[DummyStruct0]()
+	assert.Equal(t, dummy0.DummyInt, 000)
+	assert.Equal(t, dummy0.DummyStr, "000")
+
+	dummy1 := singoton.Get[DummyStruct1]()
+	assert.Equal(t, dummy1.DummyInt, 111)
+	assert.Equal(t, dummy1.DummyStr, "111")
 }
