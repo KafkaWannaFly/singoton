@@ -9,17 +9,17 @@ import (
 
 func BenchmarkGetBigStruct(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = singoton.Get[LargeStruct0]()
-		_ = singoton.Get[LargeStruct1]()
-		_ = singoton.Get[LargeStruct2]()
-		_ = singoton.Get[LargeStruct3]()
-		_ = singoton.Get[LargeStruct4]()
-		_ = singoton.Get[LargeStruct5]()
-		_ = singoton.Get[LargeStruct6]()
-		_ = singoton.Get[LargeStruct7]()
-		_ = singoton.Get[LargeStruct8]()
-		_ = singoton.Get[LargeStruct9]()
-		_ = singoton.Get[LargeStruct10]()
+		_, _ = singoton.Get[LargeStruct0]()
+		_, _ = singoton.Get[LargeStruct1]()
+		_, _ = singoton.Get[LargeStruct2]()
+		_, _ = singoton.Get[LargeStruct3]()
+		_, _ = singoton.Get[LargeStruct4]()
+		_, _ = singoton.Get[LargeStruct5]()
+		_, _ = singoton.Get[LargeStruct6]()
+		_, _ = singoton.Get[LargeStruct7]()
+		_, _ = singoton.Get[LargeStruct8]()
+		_, _ = singoton.Get[LargeStruct9]()
+		_, _ = singoton.Get[LargeStruct10]()
 	}
 }
 
@@ -45,7 +45,7 @@ func SetUp() {
 	singoton.Register(singoton.RegisterOptions[MediumStruct1]{})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct0]{
-		InitialValue: &LargeStruct0{
+		InitialValue: LargeStruct0{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -60,7 +60,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct1]{
-		InitialValue: &LargeStruct1{
+		InitialValue: LargeStruct1{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -75,7 +75,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct2]{
-		InitialValue: &LargeStruct2{
+		InitialValue: LargeStruct2{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -90,7 +90,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct3]{
-		InitialValue: &LargeStruct3{
+		InitialValue: LargeStruct3{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -105,7 +105,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct4]{
-		InitialValue: &LargeStruct4{
+		InitialValue: LargeStruct4{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -120,7 +120,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct5]{
-		InitialValue: &LargeStruct5{
+		InitialValue: LargeStruct5{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -135,7 +135,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct6]{
-		InitialValue: &LargeStruct6{
+		InitialValue: LargeStruct6{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -150,7 +150,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct7]{
-		InitialValue: &LargeStruct7{
+		InitialValue: LargeStruct7{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -165,7 +165,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct8]{
-		InitialValue: &LargeStruct8{
+		InitialValue: LargeStruct8{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -180,7 +180,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct9]{
-		InitialValue: &LargeStruct9{
+		InitialValue: LargeStruct9{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
@@ -195,7 +195,7 @@ func SetUp() {
 	})
 
 	singoton.Register(singoton.RegisterOptions[LargeStruct10]{
-		InitialValue: &LargeStruct10{
+		InitialValue: LargeStruct10{
 			Data0: "Data0",
 			Data1: "Data1",
 			Data2: "Data2",
