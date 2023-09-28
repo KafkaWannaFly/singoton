@@ -14,7 +14,7 @@ type RegisterOptions[T any] struct {
 }
 
 type IFactory[T any] interface {
-	InitObject() T
+	New() T
 }
 
 func Register[T any](options RegisterOptions[T]) {
