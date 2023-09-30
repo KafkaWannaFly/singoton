@@ -2,32 +2,35 @@ package test
 
 import (
 	"log"
-	"os"
 	"testing"
 
 	"github.com/KafkaWannaFly/singoton"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 )
 
-func TestGet(t *testing.T) {
+type TestSuite struct {
+	suite.Suite
+}
+
+func (s *TestSuite) TestGet() {
 	dummy0, _ := singoton.Get[DummyStruct0]()
-	assert.Equal(t, dummy0.DummyInt, 000)
-	assert.Equal(t, dummy0.DummyStr, "000")
+	s.Equal(dummy0.DummyInt, 000)
+	s.Equal(dummy0.DummyStr, "000")
 
 	dummy1, _ := singoton.Get[DummyStruct1]()
-	assert.Equal(t, dummy1.DummyInt, 111)
-	assert.Equal(t, dummy1.DummyStr, "111")
+	s.Equal(dummy1.DummyInt, 111)
+	s.Equal(dummy1.DummyStr, "111")
 }
 
-func TestGetNotExisted(t *testing.T) {
+func (s *TestSuite) TestGetNotExisted() {
 	_, err := singoton.Get[string]()
-	assert.NotNil(t, err)
+	s.NotNil(err)
 }
 
-func TestOverwriteAndGet(t *testing.T) {
+func (s *TestSuite) TestOverwriteAndGet() {
 	dummy2, _ := singoton.Get[DummyStruct2]()
-	assert.Equal(t, dummy2.DummyInt, 0)
-	assert.Equal(t, dummy2.DummyStr, "")
+	s.Assert().Equal(dummy2.DummyInt, 0)
+	s.Assert().Equal(dummy2.DummyStr, "")
 
 	singoton.Register(DummyStruct2{
 		DummyInt: 999,
@@ -35,13 +38,13 @@ func TestOverwriteAndGet(t *testing.T) {
 	})
 
 	newDummy2, _ := singoton.Get[DummyStruct2]()
-	assert.Equal(t, newDummy2.DummyInt, 999)
-	assert.Equal(t, newDummy2.DummyStr, "999")
+	s.Assert().Equal(newDummy2.DummyInt, 999)
+	s.Assert().Equal(newDummy2.DummyStr, "999")
 }
 
-func TestMain(m *testing.M) {
+func TestMain(t *testing.T) {
 	setUp()
-	os.Exit(m.Run())
+	suite.Run(t, new(TestSuite))
 }
 
 func setUp() {
