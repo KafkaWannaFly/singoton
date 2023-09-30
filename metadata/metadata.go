@@ -10,10 +10,21 @@ type Metadata struct {
 }
 
 func New[T any](obj T) Metadata {
-	t := reflect.TypeOf(obj)
+	objType := reflect.TypeOf(obj)
+
+	if objType != nil {
+		return Metadata{
+			Name:    objType.Name(),
+			Package: objType.PkgPath(),
+		}
+	}
+
+	// T is interface
+	fn := func(T) {}
+	interfaceType := reflect.TypeOf(fn).In(0)
 
 	return Metadata{
-		Name:    t.Name(),
-		Package: t.PkgPath(),
+		Name:    interfaceType.Name(),
+		Package: interfaceType.PkgPath(),
 	}
 }

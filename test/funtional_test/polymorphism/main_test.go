@@ -25,6 +25,12 @@ func TestGetDifferentImplementOfAnInterface(t *testing.T) {
 	assert.Equal(t, vehicles[2].GetName(), "Tank")
 }
 
+func TestGetInterface(t *testing.T) {
+	leviate, _ := singoton.Get[ILeviating]()
+
+	assert.Equal(t, leviate.Leviate(), 10)
+}
+
 func TestMain(m *testing.M) {
 	setUp()
 	os.Exit(m.Run())
@@ -32,6 +38,7 @@ func TestMain(m *testing.M) {
 
 func setUp() {
 	registerVehicle()
+	registerShip()
 }
 
 func registerVehicle() {
@@ -52,6 +59,14 @@ func registerVehicle() {
 	singoton.Register(singoton.RegisterOptions[VehicleNamer]{
 		InitialValue: Tank{
 			CanonSize: 100,
+		},
+	})
+}
+
+func registerShip() {
+	singoton.Register(singoton.RegisterOptions[ILeviating]{
+		InitialValue: AirCraftCarier{
+			NumberOfPlanes: 10,
 		},
 	})
 }
