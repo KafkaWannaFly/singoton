@@ -1,6 +1,7 @@
 package test
 
 import (
+	"log"
 	"os"
 	"testing"
 
@@ -21,8 +22,13 @@ func TestGetDifferentImplementOfAnInterface(t *testing.T) {
 	vehicles = append(vehicles, tank)
 
 	assert.Equal(t, vehicles[0].GetName(), "Motobike")
+	assert.Equal(t, vehicles[0].(Motobike).Manufacturer, "Harley Davidson")
+
 	assert.Equal(t, vehicles[1].GetName(), "Car")
+	assert.Equal(t, vehicles[1].(Car).Speed, 100)
+
 	assert.Equal(t, vehicles[2].GetName(), "Tank")
+	assert.Equal(t, vehicles[2].(Tank).CanonSize, 100)
 }
 
 func TestGetInterface(t *testing.T) {
@@ -39,6 +45,18 @@ func TestMain(m *testing.M) {
 func setUp() {
 	registerVehicle()
 	registerShip()
+
+	// Print all registered objects
+	dependencyContainer := singoton.GetDependencyContainer()
+	for key, value := range *dependencyContainer {
+		log.Println(key.ToString(), value)
+	}
+
+	// Print all registered interfaces
+	interfaceImplementMap := singoton.GetInterfaceImplementMap()
+	for key, value := range *interfaceImplementMap {
+		log.Println(key.ToString(), value.ToString())
+	}
 }
 
 func registerVehicle() {

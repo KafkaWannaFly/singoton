@@ -5,7 +5,7 @@ type VehicleNamer interface {
 }
 
 type Motobike struct {
-	Manufacturer string
+	Manufacturer string `json:"manufacturer"`
 }
 
 func (v Motobike) GetName() string {
@@ -13,7 +13,7 @@ func (v Motobike) GetName() string {
 }
 
 type Car struct {
-	Speed int
+	Speed int `json:"speed"`
 }
 
 func (c Car) GetName() string {
@@ -21,7 +21,7 @@ func (c Car) GetName() string {
 }
 
 type Tank struct {
-	CanonSize int
+	CanonSize int `json:"canon_size"`
 }
 
 func (t Tank) GetName() string {

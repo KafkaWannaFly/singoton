@@ -2,13 +2,10 @@ package singoton
 
 import (
 	"errors"
-	"reflect"
-
-	metadata "github.com/KafkaWannaFly/singoton/metadata"
 )
 
-var interfaceImplementMap = make(map[metadata.Metadata]metadata.Metadata)
-var dependencyContainer = make(map[metadata.Metadata]any)
+var interfaceImplementMap = make(map[Metadata]Metadata)
+var dependencyContainer = make(map[Metadata]any)
 
 type RegisterOptions[T any] struct {
 	InitialValue T
@@ -16,30 +13,27 @@ type RegisterOptions[T any] struct {
 }
 
 type IFactory[T any] interface {
-	New() T
+	New() *T
 }
 
 func Register[T any](options RegisterOptions[T]) {
-	var objectMetadata metadata.Metadata
+	var object T
 	if options.InitFunction != nil {
-		initValue := options.InitFunction()
-		objectMetadata = metadata.New[T]()
-		addToContainer(objectMetadata, initValue)
+		object = options.InitFunction()
 	} else {
-		objectMetadata = metadata.New[T]()
-		addToContainer(objectMetadata, options.InitialValue)
+		object = options.InitialValue
 	}
 
-	// Type T is an interface, we need to save data about which type implements it
-	fn := func(T) {}
-	interfaceType := reflect.TypeOf(fn).In(0)
-	if interfaceType.Kind() == reflect.Interface {
-		interfaceMetadata := metadata.Metadata{
-			Name:    interfaceType.Name(),
-			Package: interfaceType.PkgPath(),
-		}
-		interfaceImplementMap[interfaceMetadata] = objectMetadata
+	typeMetadata := createMetadataFromType[T]()
+	objectMetadata := createMetadataFromObject[T](object)
+	if typeMetadata != objectMetadata {
+		// This mean T is an interface, object is an implement of T
+		// Need to map interface to implement
+		interfaceImplementMap[typeMetadata] = objectMetadata
 	}
+
+	// Add object to container
+	addToContainer(objectMetadata, object)
 }
 
 func RegisterFactory[T any](factory IFactory[T]) {
@@ -55,30 +49,30 @@ func IsRegistered[T any]() bool {
 }
 
 func Get[T any]() (T, error) {
-	var obj T
-	metadata := metadata.New[T]()
-	dependencyObj := dependencyContainer[metadata]
-	if dependencyObj != nil {
-		return dependencyObj.(T), nil
+	typeMetadata := createMetadataFromType[T]()
+	objectMetadata, ok := interfaceImplementMap[typeMetadata]
+	if ok {
+		// T is an interface
+		return dependencyContainer[objectMetadata].(T), nil
 	}
 
-	// Not found object, maybe it is an interface
-	implementMetadata, isFound := interfaceImplementMap[metadata]
-	if isFound {
-		return dependencyContainer[implementMetadata].(T), nil
+	// T is not an interface
+	object, ok := dependencyContainer[typeMetadata]
+	if ok {
+		return object.(T), nil
+	} else {
+		return zeroValueOf[T](), errors.New(typeMetadata.Name + " was not registered")
 	}
-
-	return obj, errors.New("not registered")
 }
 
-func GetDependencyContainer() *map[metadata.Metadata]any {
+func GetDependencyContainer() *map[Metadata]any {
 	return &dependencyContainer
 }
 
-func GetInterfaceInplementMap() *map[metadata.Metadata]metadata.Metadata {
+func GetInterfaceImplementMap() *map[Metadata]Metadata {
 	return &interfaceImplementMap
 }
 
-func addToContainer[T any](key metadata.Metadata, value T) {
+func addToContainer[T any](key Metadata, value T) {
 	dependencyContainer[key] = value
 }
