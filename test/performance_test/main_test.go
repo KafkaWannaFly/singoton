@@ -30,182 +30,160 @@ func TestMain(m *testing.M) {
 }
 
 func setUp() {
-	singoton.Register(singoton.RegisterOptions[MiniStruct0]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct1]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct2]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct3]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct4]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct5]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct6]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct7]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct8]{})
-	singoton.Register(singoton.RegisterOptions[MiniStruct9]{})
+	singoton.Register(MiniStruct0{})
+	singoton.Register(MiniStruct1{})
+	singoton.Register(MiniStruct2{})
+	singoton.Register(MiniStruct3{})
+	singoton.Register(MiniStruct4{})
+	singoton.Register(MiniStruct5{})
+	singoton.Register(MiniStruct6{})
+	singoton.Register(MiniStruct7{})
+	singoton.Register(MiniStruct8{})
+	singoton.Register(MiniStruct9{})
 
-	singoton.Register(singoton.RegisterOptions[MediumStruct0]{})
-	singoton.Register(singoton.RegisterOptions[MediumStruct1]{})
+	singoton.Register(MediumStruct0{})
+	singoton.Register(MediumStruct1{})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct0]{
-		InitialValue: LargeStruct0{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct0{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct1]{
-		InitialValue: LargeStruct1{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct1{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct2]{
-		InitialValue: LargeStruct2{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct2{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct3]{
-		InitialValue: LargeStruct3{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct3{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct4]{
-		InitialValue: LargeStruct4{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct4{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct5]{
-		InitialValue: LargeStruct5{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct5{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct6]{
-		InitialValue: LargeStruct6{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct6{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct7]{
-		InitialValue: LargeStruct7{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct7{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct8]{
-		InitialValue: LargeStruct8{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct8{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct9]{
-		InitialValue: LargeStruct9{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct9{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 
-	singoton.Register(singoton.RegisterOptions[LargeStruct10]{
-		InitialValue: LargeStruct10{
-			Data0: "Data0",
-			Data1: "Data1",
-			Data2: "Data2",
-			Data3: "Data3",
-			Data4: "Data4",
-			Data5: "Data5",
-			Data6: "Data6",
-			Data7: "Data7",
-			Data8: "Data8",
-			Data9: "Data9",
-		},
+	singoton.Register(LargeStruct10{
+		Data0: "Data0",
+		Data1: "Data1",
+		Data2: "Data2",
+		Data3: "Data3",
+		Data4: "Data4",
+		Data5: "Data5",
+		Data6: "Data6",
+		Data7: "Data7",
+		Data8: "Data8",
+		Data9: "Data9",
 	})
 }

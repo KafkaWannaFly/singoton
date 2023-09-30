@@ -7,23 +7,11 @@ import (
 var interfaceImplementMap = make(map[Metadata]Metadata)
 var dependencyContainer = make(map[Metadata]any)
 
-type RegisterOptions[T any] struct {
-	InitialValue T
-	InitFunction func() T
-}
-
 type IFactory[T any] interface {
 	New() *T
 }
 
-func Register[T any](options RegisterOptions[T]) {
-	var object T
-	if options.InitFunction != nil {
-		object = options.InitFunction()
-	} else {
-		object = options.InitialValue
-	}
-
+func Register[T any](object T) {
 	typeMetadata := createMetadataFromType[T]()
 	objectMetadata := createMetadataFromObject[T](object)
 	if typeMetadata != objectMetadata {

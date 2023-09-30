@@ -11,3 +11,11 @@ type AirCraftCarier struct {
 func (a AirCraftCarier) Leviate() int {
 	return a.NumberOfPlanes
 }
+
+type SpaceShip struct {
+	EnginePower int
+}
+
+func (s SpaceShip) Leviate() int {
+	return s.EnginePower
+}
