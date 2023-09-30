@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"log"
 	"testing"
 
@@ -67,5 +68,6 @@ func registerDummy() {
 	singoton.Register(DummyStruct6{})
 
 	container := singoton.GetDependencyContainer()
-	log.Println("Registering", len(*container), "objects")
+	InfoColor := "\033[1;34m%s\033[0m"
+	log.Printf(InfoColor, fmt.Sprintf("Registered %d objects", len(*container)))
 }
