@@ -71,6 +71,6 @@ func registerDummy() {
 	singoton.Register(singoton.RegisterOptions[DummyStruct5]{})
 	singoton.Register(singoton.RegisterOptions[DummyStruct6]{})
 
-	container := singoton.GetContainer()
-	log.Println("Registering", len(container), "objects")
+	container := singoton.GetDependencyContainer()
+	log.Println("Registering", len(*container), "objects")
 }

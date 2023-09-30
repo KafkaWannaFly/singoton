@@ -23,10 +23,10 @@ func Register[T any](options RegisterOptions[T]) {
 	var objectMetadata metadata.Metadata
 	if options.InitFunction != nil {
 		initValue := options.InitFunction()
-		objectMetadata = metadata.New(initValue)
+		objectMetadata = metadata.New[T]()
 		addToContainer(objectMetadata, initValue)
 	} else {
-		objectMetadata = metadata.New(options.InitialValue)
+		objectMetadata = metadata.New[T]()
 		addToContainer(objectMetadata, options.InitialValue)
 	}
 
@@ -56,7 +56,7 @@ func IsRegistered[T any]() bool {
 
 func Get[T any]() (T, error) {
 	var obj T
-	metadata := metadata.New[T](obj)
+	metadata := metadata.New[T]()
 	dependencyObj := dependencyContainer[metadata]
 	if dependencyObj != nil {
 		return dependencyObj.(T), nil
@@ -71,8 +71,12 @@ func Get[T any]() (T, error) {
 	return obj, errors.New("not registered")
 }
 
-func GetContainer() map[metadata.Metadata]any {
-	return dependencyContainer
+func GetDependencyContainer() *map[metadata.Metadata]any {
+	return &dependencyContainer
+}
+
+func GetInterfaceInplementMap() *map[metadata.Metadata]metadata.Metadata {
+	return &interfaceImplementMap
 }
 
 func addToContainer[T any](key metadata.Metadata, value T) {

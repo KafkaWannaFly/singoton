@@ -24,12 +24,12 @@ func BenchmarkGetBigStruct(b *testing.B) {
 }
 
 func TestMain(m *testing.M) {
-	SetUp()
+	setUp()
 
 	os.Exit(m.Run())
 }
 
-func SetUp() {
+func setUp() {
 	singoton.Register(singoton.RegisterOptions[MiniStruct0]{})
 	singoton.Register(singoton.RegisterOptions[MiniStruct1]{})
 	singoton.Register(singoton.RegisterOptions[MiniStruct2]{})
