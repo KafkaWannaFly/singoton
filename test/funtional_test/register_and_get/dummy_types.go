@@ -1,4 +1,4 @@
-package test
+package registerandget
 
 type DummyStruct0 struct {
 	DummyStr string

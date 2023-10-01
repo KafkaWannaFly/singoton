@@ -1,4 +1,4 @@
-package test
+package polymorphism
 
 type ILeviating interface {
 	Leviate() int

@@ -5,10 +5,11 @@ import (
 )
 
 var interfaceImplementMap = make(map[Metadata]Metadata)
-var dependencyContainer = make(map[Metadata]any)
+var dependencyContainerMap = make(map[Metadata]any)
+var factoryContainerMap = make(map[Metadata]any)
 
 type IFactory[T any] interface {
-	New() *T
+	New() T
 }
 
 func Register[T any](object T) {
@@ -25,7 +26,18 @@ func Register[T any](object T) {
 }
 
 func RegisterFactory[T any](factory IFactory[T]) {
-	panic("Not implemented")
+	typeMetadata := createMetadataFromType[T]()
+	factoryContainerMap[typeMetadata] = factory
+}
+
+func GetFromFactory[T any]() (T, error) {
+	typeMetadata := createMetadataFromType[T]()
+	factory, ok := factoryContainerMap[typeMetadata]
+	if ok {
+		return factory.(IFactory[T]).New(), nil
+	} else {
+		return zeroValueOf[T](), errors.New(typeMetadata.Name + " was not registered")
+	}
 }
 
 func UnRegister[T any]() T {
@@ -41,11 +53,11 @@ func Get[T any]() (T, error) {
 	objectMetadata, ok := interfaceImplementMap[typeMetadata]
 	if ok {
 		// T is an interface
-		return dependencyContainer[objectMetadata].(T), nil
+		return dependencyContainerMap[objectMetadata].(T), nil
 	}
 
 	// T is not an interface
-	object, ok := dependencyContainer[typeMetadata]
+	object, ok := dependencyContainerMap[typeMetadata]
 	if ok {
 		return object.(T), nil
 	} else {
@@ -54,7 +66,7 @@ func Get[T any]() (T, error) {
 }
 
 func GetDependencyContainer() *map[Metadata]any {
-	return &dependencyContainer
+	return &dependencyContainerMap
 }
 
 func GetInterfaceImplementMap() *map[Metadata]Metadata {
@@ -62,5 +74,5 @@ func GetInterfaceImplementMap() *map[Metadata]Metadata {
 }
 
 func addToContainer[T any](key Metadata, value T) {
-	dependencyContainer[key] = value
+	dependencyContainerMap[key] = value
 }

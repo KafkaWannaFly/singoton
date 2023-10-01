@@ -28,9 +28,7 @@ func createMetadataFromObject[T any](obj T) Metadata {
 	}
 }
 
-/**
- * Return JSON string of Metadata
- */
+// ToString Return JSON string of Metadata
 func (metadata Metadata) ToString() string {
 	bytes, _ := json.MarshalIndent(metadata, "", "  ")
 	return string(bytes)
