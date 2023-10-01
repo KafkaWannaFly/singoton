@@ -20,20 +20,23 @@ func TestGetDifferentImplementOfAnInterface(t *testing.T) {
 	tank, _ := singoton.Get[Tank]()
 	vehicles = append(vehicles, tank)
 
-	assert.Equal(t, vehicles[0].GetName(), "Motobike")
-	assert.Equal(t, vehicles[0].(Motobike).Manufacturer, "Harley Davidson")
+	assert.Equal(t, vehicles[0].GetName(), "Motobike", "Motobike name should be Motobike")
+	assert.Equal(t, vehicles[0].(Motobike).Manufacturer, "Harley Davidson", "Motobike manufacturer should be Harley Davidson")
 
-	assert.Equal(t, vehicles[1].GetName(), "Car")
-	assert.Equal(t, vehicles[1].(Car).Speed, 100)
+	assert.Equal(t, vehicles[1].GetName(), "Car", "Car name should be Car")
+	assert.Equal(t, vehicles[1].(Car).Speed, 100, "Car speed should be 100")
 
-	assert.Equal(t, vehicles[2].GetName(), "Tank")
-	assert.Equal(t, vehicles[2].(Tank).CanonSize, 100)
+	assert.Equal(t, vehicles[2].GetName(), "Tank", "Tank name should be Tank")
+	assert.Equal(t, vehicles[2].(Tank).CanonSize, 100, "Tank canon size should be 100")
 }
 
 func TestGetInterface(t *testing.T) {
-	leviate, _ := singoton.Get[ILeviating]()
+	item, _ := singoton.Get[ILeviating]()
 
-	assert.Equal(t, leviate.Leviate(), 10)
+	assert.Equal(t, item.Leviate(), 10, "AirCraftCarier should leviate 10")
+
+	interfaceImplementMap := singoton.GetInterfaceImplementMap()
+	assert.NotEmpty(t, interfaceImplementMap, "interfaceImplementMap should not be empty")
 }
 
 func TestMain(m *testing.M) {

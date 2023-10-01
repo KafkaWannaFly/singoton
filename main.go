@@ -40,12 +40,23 @@ func GetFromFactory[T any]() (T, error) {
 	}
 }
 
-func UnRegister[T any]() T {
-	panic("Not implemented")
+func UnRegister[T any]() {
+	typeMetadata := createMetadataFromType[T]()
+	objectMetadata, ok := interfaceImplementMap[typeMetadata]
+	if ok {
+		delete(interfaceImplementMap, typeMetadata)
+		delete(dependencyContainerMap, objectMetadata)
+	} else {
+		delete(dependencyContainerMap, typeMetadata)
+	}
 }
 
 func IsRegistered[T any]() bool {
-	panic("Not implemented")
+	typeMetadata := createMetadataFromType[T]()
+	objectMetadata, hasInterface := interfaceImplementMap[typeMetadata]
+	_, hasInstance := dependencyContainerMap[objectMetadata]
+
+	return hasInterface || hasInstance
 }
 
 func Get[T any]() (T, error) {

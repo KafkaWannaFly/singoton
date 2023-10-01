@@ -40,6 +40,14 @@ func TestOverwriteAndGet(t *testing.T) {
 	assert.Equal(t, newDummy2.DummyStr, "999")
 }
 
+func TestUnRegisterItem(t *testing.T) {
+	singoton.UnRegister[DummyStruct3]()
+	_, err := singoton.Get[DummyStruct3]()
+	assert.NotNil(t, err)
+
+	assert.False(t, singoton.IsRegistered[DummyStruct3]())
+}
+
 func TestMain(m *testing.M) {
 	setUp()
 	os.Exit(m.Run())
