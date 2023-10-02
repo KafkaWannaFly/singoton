@@ -1,8 +1,6 @@
 package registerandget
 
 import (
-	"fmt"
-	"log"
 	"os"
 	"testing"
 
@@ -10,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGet(t *testing.T) {
+func Test_get(t *testing.T) {
 	dummy0, _ := singoton.Get[DummyStruct0]()
 	assert.Equal(t, dummy0.DummyInt, 000)
 	assert.Equal(t, dummy0.DummyStr, "000")
@@ -20,12 +18,12 @@ func TestGet(t *testing.T) {
 	assert.Equal(t, dummy1.DummyStr, "111")
 }
 
-func TestGetNotExisted(t *testing.T) {
+func Test_get_not_existed(t *testing.T) {
 	_, err := singoton.Get[string]()
 	assert.NotNil(t, err)
 }
 
-func TestOverwriteAndGet(t *testing.T) {
+func Test_overwrite_and_get(t *testing.T) {
 	dummy2, _ := singoton.Get[DummyStruct2]()
 	assert.Equal(t, dummy2.DummyInt, 0)
 	assert.Equal(t, dummy2.DummyStr, "")
@@ -40,7 +38,7 @@ func TestOverwriteAndGet(t *testing.T) {
 	assert.Equal(t, newDummy2.DummyStr, "999")
 }
 
-func TestUnRegisterItem(t *testing.T) {
+func Test_un_register_item(t *testing.T) {
 	singoton.UnRegister[DummyStruct3]()
 	_, err := singoton.Get[DummyStruct3]()
 	assert.NotNil(t, err)
@@ -71,8 +69,4 @@ func registerDummy() {
 	singoton.Register(DummyStruct4{})
 	singoton.Register(DummyStruct5{})
 	singoton.Register(DummyStruct6{})
-
-	container := singoton.GetDependencyContainer()
-	InfoColor := "\033[1;34m%s\033[0m"
-	log.Printf(InfoColor, fmt.Sprintf("Registered %d objects", len(*container)))
 }

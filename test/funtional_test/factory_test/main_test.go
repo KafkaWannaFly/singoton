@@ -25,6 +25,12 @@ func Test_get_nothing_from_factory(t *testing.T) {
 	assert.NotNil(t, err, "err should not be nil")
 }
 
+func Test_unregister_factory(t *testing.T) {
+	singoton.UnRegisterFactory[IStella]()
+	_, err := singoton.GetFromFactory[IStella]()
+	assert.NotNil(t, err, "err should not be nil")
+}
+
 func TestMain(m *testing.M) {
 	setUp()
 	os.Exit(m.Run())

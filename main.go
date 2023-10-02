@@ -26,16 +26,19 @@ func Register[T any](object T) {
 	dependencyContainer.addObject(objectMetadata, object)
 }
 
-func RegisterFactory[T any](factory IFactory[T]) {
+func Get[T any]() (T, error) {
 	typeMetadata := createMetadataFromType[T]()
-	dependencyContainer.addFactory(typeMetadata, factory)
-}
-
-func GetFromFactory[T any]() (T, error) {
-	typeMetadata := createMetadataFromType[T]()
-	factory, ok := dependencyContainer.getFactory(typeMetadata)
+	objectMetadata, ok := dependencyContainer.getInterfaceImplement(typeMetadata)
 	if ok {
-		return factory.(IFactory[T]).New(), nil
+		// T is an interface
+		object, _ := dependencyContainer.getObject(objectMetadata)
+		return object.(T), nil
+	}
+
+	// T is not an interface
+	object, ok := dependencyContainer.getObject(typeMetadata)
+	if ok {
+		return object.(T), nil
 	} else {
 		return zeroValueOf[T](), errors.New(typeMetadata.Name + " was not registered")
 	}
@@ -60,22 +63,24 @@ func IsRegistered[T any]() bool {
 	return hasInterface || hasInstance
 }
 
-func Get[T any]() (T, error) {
+func RegisterFactory[T any](factory IFactory[T]) {
 	typeMetadata := createMetadataFromType[T]()
-	objectMetadata, ok := dependencyContainer.getInterfaceImplement(typeMetadata)
-	if ok {
-		// T is an interface
-		object, _ := dependencyContainer.getObject(objectMetadata)
-		return object.(T), nil
-	}
+	dependencyContainer.addFactory(typeMetadata, factory)
+}
 
-	// T is not an interface
-	object, ok := dependencyContainer.getObject(typeMetadata)
+func GetFromFactory[T any]() (T, error) {
+	typeMetadata := createMetadataFromType[T]()
+	factory, ok := dependencyContainer.getFactory(typeMetadata)
 	if ok {
-		return object.(T), nil
+		return factory.(IFactory[T]).New(), nil
 	} else {
 		return zeroValueOf[T](), errors.New(typeMetadata.Name + " was not registered")
 	}
+}
+
+func UnRegisterFactory[T any]() {
+	typeMetadata := createMetadataFromType[T]()
+	dependencyContainer.removeFactory(typeMetadata)
 }
 
 func GetDependencyContainer() *map[Metadata]any {

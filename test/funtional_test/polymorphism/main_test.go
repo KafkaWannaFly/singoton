@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetDifferentImplementOfAnInterface(t *testing.T) {
+func Test_get_different_implement_of_an_interface(t *testing.T) {
 	var vehicles []VehicleNamer
 
 	motobike, _ := singoton.Get[Motobike]()
@@ -30,7 +30,7 @@ func TestGetDifferentImplementOfAnInterface(t *testing.T) {
 	assert.Equal(t, vehicles[2].(Tank).CanonSize, 100, "Tank canon size should be 100")
 }
 
-func TestGetInterface(t *testing.T) {
+func Test_get_interface(t *testing.T) {
 	item, _ := singoton.Get[ILeviating]()
 
 	assert.Equal(t, item.Leviate(), 10, "AirCraftCarier should leviate 10")
