@@ -4,9 +4,11 @@ import (
 	"errors"
 )
 
-var interfaceImplementMap = make(map[Metadata]Metadata)
-var dependencyContainerMap = make(map[Metadata]any)
-var factoryContainerMap = make(map[Metadata]any)
+var dependencyContainer = &_DependencyContainer{
+	objectContainerMap:    make(map[Metadata]any),
+	interfaceImplementMap: make(map[Metadata]Metadata),
+	factoryContainerMap:   make(map[Metadata]any),
+}
 
 type IFactory[T any] interface {
 	New() T
@@ -18,21 +20,20 @@ func Register[T any](object T) {
 	if typeMetadata != objectMetadata {
 		// This mean T is an interface, object is an implement of T
 		// Need to map interface to implement
-		interfaceImplementMap[typeMetadata] = objectMetadata
+		dependencyContainer.addInterfaceImplement(typeMetadata, objectMetadata)
 	}
 
-	// Add object to container
-	addToContainer(objectMetadata, object)
+	dependencyContainer.addObject(objectMetadata, object)
 }
 
 func RegisterFactory[T any](factory IFactory[T]) {
 	typeMetadata := createMetadataFromType[T]()
-	factoryContainerMap[typeMetadata] = factory
+	dependencyContainer.addFactory(typeMetadata, factory)
 }
 
 func GetFromFactory[T any]() (T, error) {
 	typeMetadata := createMetadataFromType[T]()
-	factory, ok := factoryContainerMap[typeMetadata]
+	factory, ok := dependencyContainer.getFactory(typeMetadata)
 	if ok {
 		return factory.(IFactory[T]).New(), nil
 	} else {
@@ -42,33 +43,34 @@ func GetFromFactory[T any]() (T, error) {
 
 func UnRegister[T any]() {
 	typeMetadata := createMetadataFromType[T]()
-	objectMetadata, ok := interfaceImplementMap[typeMetadata]
+	objectMetadata, ok := dependencyContainer.getInterfaceImplement(typeMetadata)
 	if ok {
-		delete(interfaceImplementMap, typeMetadata)
-		delete(dependencyContainerMap, objectMetadata)
+		dependencyContainer.removeInterfaceImplement(typeMetadata)
+		dependencyContainer.removeObject(objectMetadata)
 	} else {
-		delete(dependencyContainerMap, typeMetadata)
+		dependencyContainer.removeObject(typeMetadata)
 	}
 }
 
 func IsRegistered[T any]() bool {
 	typeMetadata := createMetadataFromType[T]()
-	objectMetadata, hasInterface := interfaceImplementMap[typeMetadata]
-	_, hasInstance := dependencyContainerMap[objectMetadata]
+	objectMetadata, hasInterface := dependencyContainer.getInterfaceImplement(typeMetadata)
+	_, hasInstance := dependencyContainer.getObject(objectMetadata)
 
 	return hasInterface || hasInstance
 }
 
 func Get[T any]() (T, error) {
 	typeMetadata := createMetadataFromType[T]()
-	objectMetadata, ok := interfaceImplementMap[typeMetadata]
+	objectMetadata, ok := dependencyContainer.getInterfaceImplement(typeMetadata)
 	if ok {
 		// T is an interface
-		return dependencyContainerMap[objectMetadata].(T), nil
+		object, _ := dependencyContainer.getObject(objectMetadata)
+		return object.(T), nil
 	}
 
 	// T is not an interface
-	object, ok := dependencyContainerMap[typeMetadata]
+	object, ok := dependencyContainer.getObject(typeMetadata)
 	if ok {
 		return object.(T), nil
 	} else {
@@ -77,13 +79,9 @@ func Get[T any]() (T, error) {
 }
 
 func GetDependencyContainer() *map[Metadata]any {
-	return &dependencyContainerMap
+	return dependencyContainer.getObjectMap()
 }
 
 func GetInterfaceImplementMap() *map[Metadata]Metadata {
-	return &interfaceImplementMap
-}
-
-func addToContainer[T any](key Metadata, value T) {
-	dependencyContainerMap[key] = value
+	return dependencyContainer.getInterfaceImplementMap()
 }
