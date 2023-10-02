@@ -1,1 +1,1 @@
-What do you call an umnarried, 1000 kg weighted man? A singoton. 
+What do you call an unmarried, 1000 kg weighted man? A singoton. 
