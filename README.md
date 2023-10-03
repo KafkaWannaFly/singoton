@@ -150,7 +150,7 @@ func Overwrite() {
 func Remove() {
 	// Remove the *UserCrud from dependency container.
 	// Notice that data type must be the same as the one you registered.
-	singoton.UnRegister[&UserCrud]()
+	singoton.UnRegister[*UserCrud]()
 }
 
 ```
