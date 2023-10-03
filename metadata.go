@@ -5,6 +5,7 @@ import (
 	"reflect"
 )
 
+// Metadata is a struct to store type name and package name of a type
 type Metadata struct {
 	Name    string `json:"name"`
 	Package string `json:"package"`
