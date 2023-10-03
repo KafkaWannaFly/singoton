@@ -87,6 +87,6 @@ func GetDependencyContainer() *map[Metadata]any {
 	return dependencyContainer.getObjectMap()
 }
 
-func GetInterfaceImplementMap() *map[Metadata]Metadata {
+func GetInterfaceImplement() *map[Metadata]Metadata {
 	return dependencyContainer.getInterfaceImplementMap()
 }

@@ -4,12 +4,12 @@ type VehicleNamer interface {
 	GetName() string
 }
 
-type Motobike struct {
+type Motorbike struct {
 	Manufacturer string `json:"manufacturer"`
 }
 
-func (v Motobike) GetName() string {
-	return "Motobike"
+func (v Motorbike) GetName() string {
+	return "Motorbike"
 }
 
 type Car struct {

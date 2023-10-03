@@ -11,7 +11,7 @@ import (
 func Test_get_different_implement_of_an_interface(t *testing.T) {
 	var vehicles []VehicleNamer
 
-	motobike, _ := singoton.Get[Motobike]()
+	motobike, _ := singoton.Get[Motorbike]()
 	vehicles = append(vehicles, motobike)
 
 	car, _ := singoton.Get[Car]()
@@ -20,8 +20,8 @@ func Test_get_different_implement_of_an_interface(t *testing.T) {
 	tank, _ := singoton.Get[Tank]()
 	vehicles = append(vehicles, tank)
 
-	assert.Equal(t, vehicles[0].GetName(), "Motobike", "Motobike name should be Motobike")
-	assert.Equal(t, vehicles[0].(Motobike).Manufacturer, "Harley Davidson", "Motobike manufacturer should be Harley Davidson")
+	assert.Equal(t, vehicles[0].GetName(), "Motorbike", "Motorbike name should be Motorbike")
+	assert.Equal(t, vehicles[0].(Motorbike).Manufacturer, "Harley Davidson", "Motorbike manufacturer should be Harley Davidson")
 
 	assert.Equal(t, vehicles[1].GetName(), "Car", "Car name should be Car")
 	assert.Equal(t, vehicles[1].(Car).Speed, 100, "Car speed should be 100")
@@ -35,7 +35,7 @@ func Test_get_interface(t *testing.T) {
 
 	assert.Equal(t, item.Leviate(), 10, "AirCraftCarier should leviate 10")
 
-	interfaceImplementMap := singoton.GetInterfaceImplementMap()
+	interfaceImplementMap := singoton.GetInterfaceImplement()
 	assert.NotEmpty(t, interfaceImplementMap, "interfaceImplementMap should not be empty")
 }
 
@@ -50,7 +50,7 @@ func setUp() {
 }
 
 func registerVehicle() {
-	singoton.Register(Motobike{
+	singoton.Register(Motorbike{
 		Manufacturer: "Harley Davidson",
 	})
 
