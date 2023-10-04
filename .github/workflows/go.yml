@@ -30,7 +30,7 @@ jobs:
       run: go build -v ./...
 
     - name: Test
-      run: gotestsum --format testname --json-file TestResults.json
+      run: gotestsum --format testname --jsonfile TestResults.json
 
     - name: Get current date
       id: date

@@ -4,6 +4,10 @@
 
 Centralizing object instances in a single place and covering them with an abstract layer. Also support generics.
 
+```shell
+go get github.com/KafkaWannaFly/singoton
+```
+
 ## Guide
 
 ### Register Objects and Use Them
