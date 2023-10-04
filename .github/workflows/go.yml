@@ -39,5 +39,5 @@ jobs:
     - name: Upload Go test results
       uses: actions/upload-artifact@v3
       with:
-        name: Go-results
-        path: TestResults-${{ steps.date.outputs.date }}.json
+        name: Go-results-${{ steps.date.outputs.date }}
+        path: TestResults.json
