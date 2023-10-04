@@ -1,0 +1,43 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Build & Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21.x'
+
+    - name: Install dependencies
+      run: |
+        go get .
+        go install gotest.tools/gotestsum@latest
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      run: gotestsum --format testname --json-file TestResults.json
+
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+    - name: Upload Go test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: Go-results
+        path: TestResults-${{ steps.date.outputs.date }}.json
